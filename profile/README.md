@@ -4,138 +4,95 @@
 
 # UAG-Labs
 
-**Universal Architecture Graphs for software, systems, runtime, data, AI agents, and infrastructure.**
+**UAG is a graph-native architecture compiler platform. Software architecture becomes source code.**
 
-UAG-Labs is building a graph-native architecture modeling ecosystem where the architecture graph is the source of truth. Diagrams, documentation, API specs, deployment files, validation reports, and AI-readable context are generated projections from that graph.
+UAG-Labs is building a system where the architecture graph is the program — not a picture of it. The graph describes software as nodes, edges, events, capabilities, resources, constraints, and goals. The compiler validates, transforms, and compiles that graph into real implementation targets: Rust, React, TypeScript, C, and more.
 
 ```text
-TAKG source graph
-→ UAG compiler
+Architecture graph (TAKG)
+→ UAG compiler validates, transforms, and lowers
 → UAGL compiled architecture IR
-→ diagrams · docs · contracts · deployment stubs · AI context
+→ Rust · React · TypeScript · C
+   diagrams · docs · API contracts · deployment · AI context
 ```
 
-## Core idea
+UAG is not a diagramming tool. Diagrams, documentation, APIs, deployments, and AI context are generated projections of the graph — not the graph itself.
 
-Most architecture tools start with drawings. UAG starts with a typed semantic graph.
+## The core idea
 
-A normal diagram might show:
-
-```text
-Web App → API Server → Database
-```
-
-UAG is designed to preserve the deeper architecture meaning:
+Most architecture tools start with boxes on a screen. UAG starts with a typed semantic graph that the compiler can validate and emit code from.
 
 ```text
-FrontendApp calls BackendService over HTTPS.
-BackendService exposes operations with contracts.
-BackendService writes to a Database under a security boundary.
-Database has ownership, retention, classification, and runtime constraints.
-```
-
-The central rule:
-
-```text
-The graph is the truth.
+The architecture graph is the source of truth.
 The diagram is a view.
 The export is a projection.
+The code is a compilation target.
 ```
+
+When you describe a service in UAG, you are not drawing it. You are defining its nodes, capabilities, events, resource dependencies, constraints, and goals in a form that the compiler can validate, transform, and emit as working code.
+
+## What the graph describes
+
+UAG architecture graphs are built from typed primitives:
+
+| Primitive | Description |
+|---|---|
+| **Nodes** | Systems, services, modules, components, agents, processes |
+| **Edges** | Calls, dependencies, data flows, event subscriptions |
+| **Events** | Domain events, commands, queries, notifications |
+| **Capabilities** | Operations a node exposes or consumes |
+| **Resources** | Databases, queues, stores, streams, cloud primitives |
+| **Constraints** | Security boundaries, SLAs, data retention, access rules |
+| **Goals** | Business objectives, quality attributes, non-functional requirements |
 
 ## What UAG-Labs is building
 
 | Repository | Purpose |
 |---|---|
-| [`UAG`](https://github.com/UAG-Labs/UAG) | Main project repository for specs, docs, examples, research, roadmap, and system-level context. |
-| [`UAG-core`](https://github.com/UAG-Labs/UAG-core) | Shared Rust graph model, schemas, ontology, dialects, and validation primitives for TAKG and UAGL. |
-| [`UAG-compiler`](https://github.com/UAG-Labs/UAG-compiler) | Rust compiler and CLI for transforming TAKG source graphs into UAGL compiled architecture IR and generated outputs. |
-| [`UAG-studio`](https://github.com/UAG-Labs/UAG-studio) | React and Rust visual architecture graph editor for creating, validating, compiling, and exporting UAG projects. |
+| [`UAG`](https://github.com/UAG-Labs/UAG) | Specs, docs, examples, research, and roadmap. The source-of-truth knowledge repo. |
+| [`UAG-core`](https://github.com/UAG-Labs/UAG-core) | Shared Rust graph model, schemas, ontology, dialects, and validation primitives. |
+| [`UAG-compiler`](https://github.com/UAG-Labs/UAG-compiler) | Rust compiler and CLI: validates TAKG, lowers to UAGL, compiles to code and other targets. |
+| [`UAG-studio`](https://github.com/UAG-Labs/UAG-studio) | React visual editor — the human trust and inspection layer for the architecture graph. |
 
 ## TAKG and UAGL
 
-### TAKG — Typed Architecture Knowledge Graph
+**TAKG — Typed Architecture Knowledge Graph** is the editable source graph. It is what humans and AI work with directly. It can contain draft objects, layout metadata, partial architecture, and in-progress modeling state.
 
-TAKG is the editable source graph. It is what the visual editor works with. It can contain draft objects, layout data, partial architecture, editor metadata, and in-progress modeling state.
-
-```text
-.takg.yaml = editable architecture source graph
-```
-
-### UAGL — Universal Architecture Graph Language
-
-UAGL is the compiled architecture IR. It is normalized, resolved, deterministic, validated, and suitable for export, analysis, and AI context generation.
+**UAGL — Universal Architecture Graph Language** is the compiled architecture IR. It is normalized, validated, and deterministic — the input to all compilation targets.
 
 ```text
-.uagl.yaml = compiled architecture intermediate representation
-```
-
-The intended workflow:
-
-```text
-Edit TAKG
+Edit TAKG (human or AI)
 → compile to UAGL
 → validate UAGL
-→ export from UAGL
+→ compile to Rust · TypeScript · C · React
+   and project to diagrams · docs · contracts · AI context
 ```
 
-## What the graph can model
+## Studio: the trust layer
 
-UAG is designed to model architecture across a wide range of abstraction levels:
+The visual editor is not just a drawing surface. It is the interface through which humans inspect, understand, and approve the architecture graph before and after compilation. AI systems can read and modify the graph directly, but Studio is the required trust layer — you need to see what you are compiling before you compile it.
 
-```text
-business capabilities
-bounded contexts
-software systems
-applications
-services
-modules
-APIs
-events
-data contracts
-databases
-queues
-streams
-AI agents
-MCP servers
-model providers
-runtime processes
-threads
-deployment environments
-cloud infrastructure
-operating system concepts
-low-level hardware/software interfaces
-validation rules
-generated artifacts
-```
+## Event-driven compilation
 
-The goal is not to flatten all of these into the same kind of box. The goal is to preserve their layer, plane, scope, fidelity, provenance, and relationships.
+UAG is designed to support reactive, event-driven compilation. When the graph changes — through Studio edits or AI modifications — the compiler can revalidate and recompile incrementally, producing live updated outputs across all targets.
 
 ## Design principles
 
-1. **Graph first** — architecture objects and relationships are the source of truth.
-2. **Views are projections** — diagrams are generated views over the graph.
-3. **Exports are lossy unless proven otherwise** — serious exports should report what they cannot preserve.
+1. **The graph is the program** — architecture objects, relationships, and constraints are the compilable source of truth.
+2. **Code is a compilation target** — Rust, TypeScript, C, React, and other code are compiled from the graph, not written against it.
+3. **Views are projections** — diagrams, docs, and dashboards are generated views over the graph.
 4. **TAKG and UAGL are separate** — editable source graph and compiled IR have different responsibilities.
-5. **Rust for system-level implementation** — the core model, compiler, validators, and CLI are Rust-first.
-6. **React for the visual editor** — Studio uses React, TypeScript, and a graph canvas UI.
-7. **Dialects extend the system** — AI-agent, low-level systems, enterprise-domain, and data-system modeling should be extensions, not bloated core concepts.
-8. **Validation must be semantic** — the system should catch architecture problems, not just syntax errors.
-9. **High-level and low-level architecture need guardrails** — abstraction boundaries, time domains, safety constraints, and runtime/physical distinctions must be explicit.
-10. **AI context must be safe and traceable** — generated AI context should preserve constraints, side effects, trust boundaries, and uncertainty.
+5. **Rust core** — the graph model, compiler, validators, and CLI are Rust-first.
+6. **React Studio** — the visual editor is the human trust and inspection layer.
+7. **Dialects extend the system** — AI-agent, low-level systems, enterprise-domain, and data-system modeling are extensions, not bloated core concepts.
+8. **Semantic validation** — the compiler catches architecture problems, not just syntax errors.
+9. **Exports are lossy unless proven otherwise** — the compiler reports what it cannot preserve.
+10. **AI context must be safe and traceable** — generated AI context preserves constraints, side effects, trust boundaries, and uncertainty.
 
 ## Current status
 
-UAG-Labs is in the foundation-building phase. The first priority is to establish the specs, shared Rust model, compiler pipeline, and minimal Studio editor loop.
-
-```text
-UAG specs and examples
-→ UAG-core Rust object model
-→ UAG-compiler TAKG-to-UAGL compile path
-→ UAG-studio minimal visual editing prototype
-```
+UAG-Labs is in the foundation-building phase. The first priority is to establish the specs, shared Rust graph model, compiler pipeline with code generation targets, and a minimal Studio editor loop.
 
 ## Long-term mission
 
-> Make architecture graph-native, typed, validatable, compilable, searchable, diffable, and understandable by both humans and AI systems.
-
-UAG-Labs is building toward a world where architecture is not trapped inside static diagrams or scattered documentation, but lives as a compiled semantic graph.
+> Build a world where software architecture is not trapped inside static diagrams or scattered documentation — it lives as a compiled semantic graph that generates everything downstream from it.
